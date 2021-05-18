@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from .models import Article
@@ -22,7 +22,16 @@ from rest_framework import mixins
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+# Viewsets and Routers
+
+from rest_framework import viewsets
+# from django.shortcuts import get_object_or_404
+
 # Create your views here.
+class ArticleViewSet(viewsets.ModelViewSet):
+    # ArticleGenericViewSet
+    serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
 
 class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
     serializer_class = ArticleSerializer
